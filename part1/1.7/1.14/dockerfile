@@ -1,0 +1,15 @@
+FROM ruby:2.6.0
+
+RUN apt-get update; \
+    apt-get install -y curl gnupg; \
+    curl -sL https://deb.nodesource.com/setup_8.x | bash -; \
+    apt-get install -y nodejs; \
+    rm -rf /var/lib/apt/lists/*
+RUN gem install bundler -v '1.17.3'
+COPY . .
+RUN bundle install
+RUN rails db:migrate
+CMD [ "rails", "s" ]
+EXPOSE 3000
+
+
