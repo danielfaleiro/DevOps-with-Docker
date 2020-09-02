@@ -1,0 +1,15 @@
+FROM node:14.9.0-alpine3.10
+
+WORKDIR /app
+
+COPY . .
+RUN npm install && \
+    rm -rf /var/lib/apt/lists/* && \
+    chown -R node .
+
+ENV FRONT_URL http://localhost:5000
+USER node
+
+CMD [ "npm", "start" ]
+
+EXPOSE 8000
